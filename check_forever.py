@@ -3,12 +3,13 @@ import datetime as dt
 import os
 import pickle
 import string
+import time
 
 import requests
 from bs4 import BeautifulSoup as soup4
 
-from private import RETURBIL_PUSH_TOKEN
 from private import PUSHOVER_USER_KEY_MARTIN as PUSHOVER_USER_KEY
+from private import RETURBIL_PUSH_TOKEN
 from push import send_push
 
 SUCCESSFUL_REQUEST_CODE = 200
@@ -118,11 +119,15 @@ def main(args=None):
     last_check = dt.datetime.now() - dt.timedelta(days=1)
     while True:
         if dt.datetime.now() - last_check > dt.timedelta(seconds=args.i):
-            check(fra_by=args.from_city,
-                  til_by=args.to_city,
-                  token=args.app,
-                  user=args.usr)
-            last_check = dt.datetime.now()
+            try:
+                check(fra_by=args.from_city,
+                      til_by=args.to_city,
+                      token=args.app,
+                      user=args.usr)
+                last_check = dt.datetime.now()
+            except Exception as e:
+                log_add_line('Exception: ' + str(e))
+                time.sleep(60 * 3)
 
 
 if __name__ == "__main__":
