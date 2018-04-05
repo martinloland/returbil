@@ -42,3 +42,4 @@ For å vise hjelpeinformasjonen kjør::
       -i INTERVAL      interval time for check in seconds (default 60)
       -app APP_TOKEN   the pushover app token (default secret)
       -usr USER_TOKEN  the pushover user token (default secret)
+

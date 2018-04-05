@@ -74,7 +74,9 @@ def check(fra_by, til_by, token, user):
                                   url=url,
                                   token=token,
                                   user=user)
-                        print('Sent push notification to your phone')
+                        msg = 'Sent id {} to phone'.format(id)
+                        log_add_line(msg)
+                        print(msg)
 
 
 def main(args=None):
