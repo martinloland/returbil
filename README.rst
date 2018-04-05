@@ -7,7 +7,7 @@ forhåndsdefinert *fra by* og *til by*. Hvis et funn blir gjort vil den sende
 en push-notifikasjon til mobilen din.
 
 .. image:: example.png
-   :width: 50 %
+   :width: 200 px
 
 Installasjon
 ===========
