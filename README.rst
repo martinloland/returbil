@@ -6,6 +6,8 @@ Dette python scriptet vil scanne returbil.no etter aktuelle biler etter en
 forhåndsdefinert *fra by* og *til by*. Hvis et funn blir gjort vil den sende
 en push-notifikasjon til mobilen din.
 
+.. image:: example.png
+
 Installasjon
 ===========
 - programmet krever at appen *pushover* er installert på mobilen din
