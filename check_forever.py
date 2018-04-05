@@ -74,7 +74,7 @@ def check(fra_by, til_by, token, user):
                                   url=url,
                                   token=token,
                                   user=user)
-                        print('found new alternative!')
+                        print('Sent push notification to your phone')
 
 
 def main(args=None):
