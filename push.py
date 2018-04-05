@@ -4,13 +4,13 @@ import urllib
 
 def send_push(title, message, url=None, token=None, user=None):
     RETURBIL_PUSH_TOKEN = token
-    PUSHOVER_USER_KEY_MARTIN = user
+    PUSHOVER_USER_KEY = user
     conn = http.client.HTTPSConnection("api.pushover.net:443")
     if url:
         conn.request("POST", "/1/messages.json",
                      urllib.parse.urlencode({
                          "token": RETURBIL_PUSH_TOKEN,
-                         "user": PUSHOVER_USER_KEY_MARTIN,
+                         "user": PUSHOVER_USER_KEY,
                          "title": title,
                          "message": message,
                          "url": url
@@ -19,7 +19,7 @@ def send_push(title, message, url=None, token=None, user=None):
         conn.request("POST", "/1/messages.json",
                      urllib.parse.urlencode({
                          "token": RETURBIL_PUSH_TOKEN,
-                         "user": PUSHOVER_USER_KEY_MARTIN,
+                         "user": PUSHOVER_USER_KEY,
                          "title": title,
                          "message": message
                      }), {"Content-type": "application/x-www-form-urlencoded"})

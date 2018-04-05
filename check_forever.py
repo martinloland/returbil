@@ -7,7 +7,8 @@ import string
 import requests
 from bs4 import BeautifulSoup as soup4
 
-from private import RETURBIL_PUSH_TOKEN, PUSHOVER_USER_KEY_MARTIN
+from private import RETURBIL_PUSH_TOKEN
+from private import PUSHOVER_USER_KEY_MARTIN as PUSHOVER_USER_KEY
 from push import send_push
 
 SUCCESSFUL_REQUEST_CODE = 200
@@ -110,7 +111,7 @@ def main(args=None):
     if not args.app:
         args.app = RETURBIL_PUSH_TOKEN
     if not args.usr:
-        args.usr = PUSHOVER_USER_KEY_MARTIN
+        args.usr = PUSHOVER_USER_KEY
 
     last_check = dt.datetime.now() - dt.timedelta(days=1)
     while True:
