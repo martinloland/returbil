@@ -48,6 +48,8 @@ def add_id(id):
 
 def check(fra_by, til_by, token, user):
     log_add_line('Checked for cars {} -> {}'.format(fra_by, til_by))
+    fra_by = fra_by.lower().replace('\xf8', 'o')
+    til_by = til_by.lower().replace('\xf8', 'o')
     r = requests.get(WEBPAGE)
     if r.status_code is SUCCESSFUL_REQUEST_CODE:
         soup = soup4(r.content, 'html.parser')
@@ -58,15 +60,11 @@ def check(fra_by, til_by, token, user):
                 url = 'http://returbil.no/' + line.find('a', href=True)['href']
                 id = str(cols[1].string)
                 dtg = cols[3].string
-                fra = cols[5].string.lower()
-                til = cols[7].string.lower()
-                if '\xf8' in fra:
-                    fra = fra.replace('\xf8', 'o')
-                if '\xf8' in til:
-                    til = til.replace('\xf8', 'o')
+                fra = cols[5].string.lower().replace('\xf8', 'o')
+                til = cols[7].string.lower().replace('\xf8', 'o')
                 if id not in database_list():
                     add_id(id)
-                    if fra_by.lower() in fra and til_by.lower() in til:
+                    if fra_by in fra and til_by in til:
                         send_push(title='Nytt treff på returbil',
                                   message='Fra: {}\nTil: {}\nLedig fra: {}'
                                   .format(string.capwords(fra),
@@ -80,7 +78,7 @@ def check(fra_by, til_by, token, user):
                         print(msg)
 
 
-def main(args=None):
+def main():
     parser = argparse.ArgumentParser(
         description='Check returbil.no for cars')
     parser.add_argument(
