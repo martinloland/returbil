@@ -1,4 +1,7 @@
 private.py
+database.pickle
+log.txt
+.idea
 
 # Created by https://www.gitignore.io/api/python,windows,pycharm
 
