@@ -78,19 +78,35 @@ def check(fra_by, til_by, token, user):
                         print(msg)
 
 
+def get_wanted():
+    wanted = []
+    with open('wanted.txt', 'r') as f:
+        for line in f.readlines():
+            contents = line.rstrip().split(',')
+            fra = contents[0]
+            til = contents[1]
+            usr = contents[2]
+            if usr == '':
+                usr = PUSHOVER_USER_KEY
+            wanted.append({'from_city': fra,
+                           'to_city': til,
+                           'usr': usr})
+    return wanted
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Check returbil.no for cars')
     parser.add_argument(
-        'from_city',
+        '-from_city',
         metavar='FROM',
         type=str,
-        help='The city to travel from')
+        help='The city to travel from (default from file)')
     parser.add_argument(
-        'to_city',
+        '-to_city',
         metavar='TO',
         type=str,
-        help='The city to travel to')
+        help='The city to travel to (default from file)')
     parser.add_argument(
         '-i',
         metavar='INTERVAL',
@@ -107,25 +123,43 @@ def main():
         metavar='USER_TOKEN',
         type=str,
         help='the pushover user token (default secret)')
-
+    parser.add_argument(
+        '--fromfile',
+        action="store_true",
+        help='set to load cities from wanted.txt',
+        )
     args = parser.parse_args()
+
     if not args.app:
-        args.app = RETURBIL_PUSH_TOKEN
-    if not args.usr:
-        args.usr = PUSHOVER_USER_KEY
+        app_token = RETURBIL_PUSH_TOKEN
+    else:
+        app_token = args.app
+
+    wanted = []
+    if not args.fromfile:
+        if not args.usr:
+            user = PUSHOVER_USER_KEY
+        else:
+            user = args.usr
+        wanted.append({'from_city': args.from_city,
+                       'to_city': args.to_city,
+                       'usr': user})
 
     last_check = dt.datetime.now() - dt.timedelta(days=1)
     while True:
         if dt.datetime.now() - last_check > dt.timedelta(seconds=args.i):
-            try:
-                check(fra_by=args.from_city,
-                      til_by=args.to_city,
-                      token=args.app,
-                      user=args.usr)
-                last_check = dt.datetime.now()
-            except Exception as e:
-                log_add_line('Exception: ' + str(e))
-                time.sleep(60 * 3)
+            if args.fromfile:
+                wanted = get_wanted()
+            for trip in wanted:
+                try:
+                    check(fra_by=trip['from_city'],
+                          til_by=trip['to_city'],
+                          token=app_token,
+                          user=trip['usr'])
+                    last_check = dt.datetime.now()
+                except Exception as e:
+                    log_add_line('Exception: ' + str(e))
+                    time.sleep(60 * 3)
 
 
 if __name__ == "__main__":
