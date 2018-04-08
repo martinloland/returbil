@@ -26,9 +26,10 @@ Kjør følgende kommando for å starte scriptet::
 Hvor du bytter ut fra, til, APP_TOKEN og USER_KEY med dine egne verdier.
 
 Alternativt kan scriptet hente flere ønsker fra fil med navn *wanted.txt* formatert
-som en csv fil uten headers.::
+som en csv fil uten headers.
 
-   *wanted.txt:*
+**wanted.txt:**::
+
    oslo,kristiansand,USER_KEY
    oslo,bergen,USER_KEY
 
