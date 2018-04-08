@@ -46,7 +46,7 @@ def add_id(id):
         log_add_line('Added {}'.format(id))
 
 
-def check(fra_by, til_by, token, user):
+def check(fra_by, til_by, token, user, update_db=False):
     log_add_line('Checked for cars {} -> {}'.format(fra_by, til_by))
     fra_by = fra_by.lower().replace('\xf8', 'o')
     til_by = til_by.lower().replace('\xf8', 'o')
@@ -63,19 +63,21 @@ def check(fra_by, til_by, token, user):
                 fra = cols[5].string.lower().replace('\xf8', 'o')
                 til = cols[7].string.lower().replace('\xf8', 'o')
                 if id not in database_list():
-                    add_id(id)
-                    if fra_by in fra and til_by in til:
-                        send_push(title='Nytt treff på returbil',
-                                  message='Fra: {}\nTil: {}\nLedig fra: {}'
-                                  .format(string.capwords(fra),
-                                          string.capwords(til),
-                                          string.capwords(dtg)),
-                                  url=url,
-                                  token=token,
-                                  user=user)
-                        msg = 'Sent id {} to phone'.format(id)
-                        log_add_line(msg)
-                        print(msg)
+                    if update_db:
+                        add_id(id)
+                    else:
+                        if fra_by in fra and til_by in til:
+                            send_push(title='Nytt treff på returbil',
+                                      message='Fra: {}\nTil: {}\nLedig fra: {}'
+                                      .format(string.capwords(fra),
+                                              string.capwords(til),
+                                              string.capwords(dtg)),
+                                      url=url,
+                                      token=token,
+                                      user=user)
+                            msg = 'Sent id {} to phone'.format(id)
+                            log_add_line(msg)
+                            print(msg)
 
 
 def get_wanted():
@@ -156,10 +158,15 @@ def main():
                           til_by=trip['to_city'],
                           token=app_token,
                           user=trip['usr'])
-                    last_check = dt.datetime.now()
                 except Exception as e:
                     log_add_line('Exception: ' + str(e))
                     time.sleep(60 * 3)
+            check(fra_by='None',
+                  til_by='None',
+                  token='None',
+                  user='None',
+                  update_db=True)
+            last_check = dt.datetime.now()
 
 
 if __name__ == "__main__":
