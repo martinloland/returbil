@@ -19,6 +19,7 @@ DATABASE = 'database.pickle'
 
 
 def log_add_line(text):
+    print(text)
     with open('log.txt', 'a+') as f:
         f.write(str(dt.datetime.now()) + ' ' + text + "\r")
 
@@ -47,7 +48,7 @@ def add_id(id):
 
 
 def check(fra_by, til_by, token, user, update_db=False):
-    log_add_line('Checked for cars {} -> {}'.format(fra_by, til_by))
+    # log_add_line('Checked for cars {} -> {}'.format(fra_by, til_by))
     fra_by = fra_by.lower().replace('\xf8', 'o')
     til_by = til_by.lower().replace('\xf8', 'o')
     r = requests.get(WEBPAGE)
