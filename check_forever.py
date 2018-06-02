@@ -85,14 +85,15 @@ def get_wanted():
     with open('wanted.txt', 'r') as f:
         for line in f.readlines():
             contents = line.rstrip().split(',')
-            fra = contents[0]
-            til = contents[1]
-            usr = contents[2]
-            if usr == '':
-                usr = PUSHOVER_USER_KEY
-            wanted.append({'from_city': fra,
-                           'to_city': til,
-                           'usr': usr})
+            if contents:
+                fra = contents[0]
+                til = contents[1]
+                usr = contents[2]
+                if usr == '':
+                    usr = PUSHOVER_USER_KEY
+                wanted.append({'from_city': fra,
+                               'to_city': til,
+                               'usr': usr})
     return wanted
 
 
