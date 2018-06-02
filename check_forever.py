@@ -153,7 +153,9 @@ def main():
         if dt.datetime.now() - last_check > dt.timedelta(seconds=args.i):
             if args.fromfile:
                 wanted = get_wanted()
+            print(len(wanted))
             for trip in wanted:
+                print(trip)
                 try:
                     check(fra_by=trip['from_city'],
                           til_by=trip['to_city'],
