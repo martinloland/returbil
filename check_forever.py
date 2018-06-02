@@ -19,7 +19,6 @@ DATABASE = 'database.pickle'
 
 
 def log_add_line(text):
-    print(text)
     with open('log.txt', 'a+') as f:
         f.write(str(dt.datetime.now()) + ' ' + text + "\r")
 
@@ -48,7 +47,6 @@ def add_id(id):
 
 
 def check(fra_by, til_by, token, user, update_db=False):
-    print('i am here')
     log_add_line('Checked for cars {} -> {}'.format(fra_by, til_by))
     fra_by = fra_by.lower().replace('\xf8', 'o')
     til_by = til_by.lower().replace('\xf8', 'o')
@@ -155,9 +153,7 @@ def main():
         if dt.datetime.now() - last_check > dt.timedelta(seconds=args.i):
             if args.fromfile:
                 wanted = get_wanted()
-            print(len(wanted))
             for trip in wanted:
-                print(trip)
                 try:
                     check(fra_by=trip['from_city'],
                           til_by=trip['to_city'],
@@ -171,11 +167,6 @@ def main():
                     log_add_line('Exception: ' + str(e))
                     time.sleep(60 * 3)
                     continue
-            check(fra_by='None',
-                  til_by='None',
-                  token='None',
-                  user='None',
-                  update_db=True)
             last_check = dt.datetime.now()
 
 
