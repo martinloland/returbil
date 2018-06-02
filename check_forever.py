@@ -48,7 +48,8 @@ def add_id(id):
 
 
 def check(fra_by, til_by, token, user, update_db=False):
-    # log_add_line('Checked for cars {} -> {}'.format(fra_by, til_by))
+    print('i am here')
+    log_add_line('Checked for cars {} -> {}'.format(fra_by, til_by))
     fra_by = fra_by.lower().replace('\xf8', 'o')
     til_by = til_by.lower().replace('\xf8', 'o')
     r = requests.get(WEBPAGE)
