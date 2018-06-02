@@ -159,8 +159,13 @@ def main():
                           token=app_token,
                           user=trip['usr'])
                 except Exception as e:
+                    send_push(title='Returbil exception',
+                              message=str(e),
+                              token=app_token,
+                              user=PUSHOVER_USER_KEY)
                     log_add_line('Exception: ' + str(e))
                     time.sleep(60 * 3)
+                    continue
             check(fra_by='None',
                   til_by='None',
                   token='None',
