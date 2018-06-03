@@ -159,12 +159,12 @@ def main():
                           til_by=trip['to_city'],
                           token=app_token,
                           user=trip['usr'])
-                except Exception as e:
+                except:
                     send_push(title='Returbil exception',
-                              message=str(e),
+                              message='Something happened',
                               token=app_token,
                               user=PUSHOVER_USER_KEY)
-                    log_add_line('Exception: ' + str(e))
+                    log_add_line('Exception: ' + 'something')
                     time.sleep(60 * 3)
                     continue
             last_check = dt.datetime.now()
