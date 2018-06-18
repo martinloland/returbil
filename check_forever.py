@@ -46,7 +46,7 @@ def add_id(id):
         log_add_line('Added {}'.format(id))
 
 
-def check(fra_by, til_by, token, user, update_db=False):
+def check(fra_by, til_by, token, user, update_db=True):
     log_add_line('Checked for cars {} -> {}'.format(fra_by, til_by))
     fra_by = fra_by.lower().replace('\xf8', 'o')
     til_by = til_by.lower().replace('\xf8', 'o')
