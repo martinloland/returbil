@@ -3,6 +3,8 @@ private.py
 database.pickle
 log.txt
 .idea
+database
+nohup.out
 
 # Created by https://www.gitignore.io/api/python,windows,pycharm
 
