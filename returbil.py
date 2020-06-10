@@ -74,7 +74,7 @@ class Returbil:
                             notes = trip_detail.find_all('td', colspan=4)[0].string
                             booking_url = RETURBIL_SITE_ROOT + booking_detail.contents[0].attrs['href']
                             Logger.add_entry(
-                                f"Found trip from {source.capitalize()} to {destination.capitalize()}. "
+                                f"Found trip on Returbil from {source.capitalize()} to {destination.capitalize()}. "
                                 f"Sending push...")
 
                             await push_notification.send(
@@ -86,7 +86,7 @@ class Returbil:
                             new_trip_ids.add(trip_id)
 
             if new_trip_ids:
-                Logger.add_entry("Scan complete. Storing new trip ids in database.")
+                Logger.add_entry("Returbil scan complete. Storing new trip ids in database.")
                 Database.store(new_trip_ids)
             else:
-                Logger.add_entry("Found no new trips matching the provided arguments.")
+                Logger.add_entry("Found no new Returbil trips matching the provided arguments.")
