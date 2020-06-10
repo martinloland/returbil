@@ -4,6 +4,7 @@ import os
 
 from logger import Logger
 from returbil import Returbil
+from freerider import FreeRider
 
 
 def _set_up_arguments() -> argparse.Namespace:
@@ -26,11 +27,14 @@ def _set_up_arguments() -> argparse.Namespace:
     parser.add_argument(
         '--fuzzy', action="store_true",
         help="Allow non-exact matches for city names, by only looking at the first word (e.g. "
-             "`Trondheim LUFTHAVN VÆRNES` would match if you have entered `Trondheim`)"
-    )
+             "`Trondheim LUFTHAVN VÆRNES` would match if you have entered `Trondheim`)")
+    parser.add_argument(
+        '--exclude-returbil', action="store_true", help='Disable returbil.no scanning')
+    parser.add_argument(
+        '--exclude-freerider', action="store_true", help='Disable hertzfreerider.no scanning')
 
     args = parser.parse_args()
-
+    
     if args.usr is None:
         parser.error(message="You need to provide your pushover user key.")
 
@@ -54,13 +58,18 @@ async def main():
     try:
         args = _set_up_arguments()
         returbil = Returbil(args=args)
+        freerider = FreeRider(args=args)
 
         Logger.add_entry(None)
         Logger.add_entry("** Program startup **")
 
         while True:
-            Logger.add_entry("Started looking for available trips...")
-            await returbil.parse_web_page()
+            if args.exclude_returbil is False:
+                Logger.add_entry("Started looking for available Returbil trips...")
+                await returbil.parse_web_page()
+            if args.exclude_freerider is False:
+                Logger.add_entry("Started looking for available FreeRider trips...")
+                await freerider.parse_web_page()
             await asyncio.sleep(delay=args.interval)
 
     except Exception as e:

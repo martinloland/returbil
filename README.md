@@ -26,7 +26,7 @@ python scan.py -app APP_TOKEN -usr USER_KEY --from-city FROM --to-city TO
 ```
 hvor du bytter ut `USER_KEY`, `APP_TOKEN`, `FROM` og `TO` med dine egne verdier.
 
-Alternativt kan skriptet søke etter flere ønsker samtidig, ved at man lager en fil med navn `wanted.txt`. Denne må være formatert som en .csv-fil uten headers. Verdiene må være separert med komma, og må ikke inneholde mellomrom. Du trenger ikke ta hensyn til store/små bokstaver.
+Alternativt kan skriptet søke etter flere ønsker samtidig, ved at man lager en fil med navn `wanted.txt`. Denne må være formatert som en .csv-fil uten headers med UTF8 encoding. Verdiene må være separert med komma, og må ikke inneholde mellomrom. Du trenger ikke ta hensyn til store/små bokstaver.
 
 **wanted.txt**:
 ```csv
