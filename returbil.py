@@ -19,7 +19,7 @@ class Returbil:
     def _find_desired_trips(self) -> dict:
         if self.args.fromfile:
             desired_trips = {}
-            with open('wanted.txt', 'r') as file:
+            with open('wanted.txt', 'r', encoding="utf8") as file:
                 for trip in file:
                     source, destination = tuple(trip.strip().split(','))
                     desired_trips[source.lower()] = destination.lower()
